@@ -7,10 +7,9 @@
 #include <errno.h>
 //#include "socket.h"
 
-#define DEFAULT_PORT "3002"
-#define DEFAULT_HOST "z690-fc41"
+#define DEFAULT_PORT "3003"
 #define DEFAULT_CLOG "./cpptest.clog"
-#define DEFAULT_OVERWRITE 1
+#define DEFAULT_APPEND 0
 
 void print_syntax()
 {
@@ -47,10 +46,10 @@ int main(int argc, char **argv)
 {
   int port = atoi(getArg(argc, argv, "-port", DEFAULT_PORT));
   const char *clog = getArg(argc, argv, "-clog", DEFAULT_CLOG);
-  int overwrite_clog = getPresence(argc, argv, "-overwrite", DEFAULT_OVERWRITE);
+  int append_clog = getPresence(argc, argv, "-append", DEFAULT_APPEND);
 
 
-  printf("Port: %d\nCoverage Log: %s\nOverwrite Coverage Log: %s\n\n", port, clog, overwrite_clog ? "Yes" : "No");
+  printf("Port: %d\nCoverage Log: %s\nAppend Coverage Log: %s\n\n", port, clog, append_clog ? "Yes" : "No");
 
   printf("Waiting for instrumented code to phone home...\n");
 
@@ -104,7 +103,7 @@ int main(int argc, char **argv)
   size_t size = 0xFFFF;
   unsigned char buffer[size];
 
-  FILE *hClog = fopen(clog, overwrite_clog ? "w" : "a");
+  FILE *hClog = fopen(clog, append_clog ? "a" : "w");
 
   if ( 0 == hClog )
   {
@@ -113,7 +112,7 @@ int main(int argc, char **argv)
   else
   {
     printf("Reading coverage data...\n");
-    
+
     ssize_t readCount = 0, totalReadCount = 0, totalWriteCount = 0;
     
     while ((readCount = read(hClient, &buffer, size)) > 0)
