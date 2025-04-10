@@ -1,9 +1,25 @@
-# socket_listener
-Code Coverage Listener (C)
+# Code Coverage Listener
+This application is designed to capture code coverage results from a Parasoft instrumented C or C++ library/binary executing on a different machine or embedded system. 
+
+When the Parasoft instrumented library/binary is executed remotely, it will attempt to phone home and report the coverage data. In order for this to work, an application (such as this one) must be listening for the connection on the proper port and then write the coverage data to a file locally.
+
+This is necessary when a remote machine/embedded system doesn't have a file system or the file system is difficult to access. 
+
+Two things are necessary to make this work:
+1) The Parasoft runtime library, which defines functions to gather/report code coverage, must be built with the correct information:
+    - To use socket based communication
+    - The IP/Hostname & port to send the coverage data to
+2) An application listening on the correct IP/Port must be ready to receive data and have the capability to write the received data to a log file.
+
+
+# Building the Code Coverage Listener
+```
+make all clean
+```
 
 # Basic Usage
 ```
-./socket_listener -port 3003 -clog /home/user/cpptest.clog -overwrite
+./socket_listener -port 3003 -clog /home/user/cpptest.clog
 ```
 ### Flags
 `-port`: specifies the port to listen on. If not specified, defaults to 3003. Make sure the runtime library is built accordingly and the port matches.

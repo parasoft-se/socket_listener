@@ -3,7 +3,7 @@ INCLUDE_FLAGS=-I.
 CFLAGS=-g -Werror
 EXTRA_CFLAGS=
 
-SRCS = main.c socket.c
+SRCS = main.c
 
 OBJ = $(SRCS:.c=.o)
 
