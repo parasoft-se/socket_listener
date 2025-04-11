@@ -3,11 +3,11 @@ INCLUDE_FLAGS=-I.
 CFLAGS=-g -Werror
 EXTRA_CFLAGS=
 
-SRCS = main.c
+SRCS = cov-listener.c
 
 OBJ = $(SRCS:.c=.o)
 
-EXEC=socket_listener
+EXEC=cov-listener
 
 .PHONY = clean all
 
